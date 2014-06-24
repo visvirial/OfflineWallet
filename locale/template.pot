@@ -1,0 +1,238 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-06-24 14:49+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: js/OfflineWallet.js:135
+msgid "failed to validate given mini private key."
+msgstr ""
+
+#: js/OfflineWallet.js:140
+msgid "type parameter is wrong or not supported currently."
+msgstr ""
+
+#: js/OfflineWallet.js:174
+msgid "Bitcoin"
+msgstr ""
+
+#: js/OfflineWallet.js:176
+msgid "Monacoin"
+msgstr ""
+
+#: js/index.js:112
+msgid "(Unknown label)"
+msgstr ""
+
+#: js/index.js:121
+msgid "Recipient address"
+msgstr ""
+
+#: js/index.js:125
+msgid "Unknown label"
+msgstr ""
+
+#: js/index.js:132
+msgid "Amount to send"
+msgstr ""
+
+#: js/index.js:162
+#, javascript-format
+msgid "The address for receipient #%d is not valid"
+msgstr ""
+
+#: js/index.js:166
+#, javascript-format
+msgid "The amount to send for receipient #%d is not valid"
+msgstr ""
+
+#: js/index.js:192
+msgid "No unspent transaction is selected"
+msgstr ""
+
+#: js/index.js:202
+msgid "Transaction fee is negative"
+msgstr ""
+
+#: js/index.js:211
+msgid "Insufficient funds"
+msgstr ""
+
+#: js/index.js:232
+msgid "Send a transaction as follows. Are you sure?"
+msgstr ""
+
+#: js/index.js:234
+msgid "TX ID"
+msgstr ""
+
+#: js/index.js:235
+msgid "Receipient"
+msgstr ""
+
+#: js/index.js:240
+msgid "Fee"
+msgstr ""
+
+#: js/index.js:244
+msgid "Confirm transfer"
+msgstr ""
+
+#: js/index.js:254
+msgid "Transaction sent successfully"
+msgstr ""
+
+#: js/index.js:254
+msgid "Your transaction has been successfully sent to the network"
+msgstr ""
+
+#: js/index.js:262
+msgid "Transaction send error"
+msgstr ""
+
+#: js/index.js:262
+msgid "An error has occured during sending a transaction:"
+msgstr ""
+
+#: js/index.js:320
+msgid "unconfirmed"
+msgstr ""
+
+#: js/index.js:324 js/index.js:361
+msgid "Send"
+msgstr ""
+
+#: js/index.js:324 js/index.js:361
+msgid "Receive"
+msgstr ""
+
+#: js/index.js:412
+msgid "Registered the following address:"
+msgstr ""
+
+#: js/index.js:412 js/index.js:423
+msgid "Label"
+msgstr ""
+
+#: js/index.js:412 js/index.js:423
+msgid "Address"
+msgstr ""
+
+#: js/index.js:413
+msgid "Contact successfully registered"
+msgstr ""
+
+#: js/index.js:416
+msgid "Failed to register a contact"
+msgstr ""
+
+#: js/index.js:416
+msgid ""
+"An error has occured during registering a contact. Please check the address "
+"again."
+msgstr ""
+
+#: js/index.js:423
+msgid "Action"
+msgstr ""
+
+#: js/index.js:429
+msgid "Edit"
+msgstr ""
+
+#: js/index.js:430
+msgid "Delete"
+msgstr ""
+
+#: js/index.js:589
+msgid "Passphrase too short"
+msgstr ""
+
+#: js/index.js:589
+msgid "Passphrase must be longer than 20 letters."
+msgstr ""
+
+#: js/index.js:611
+msgid "Are you sure to display your secret keys?"
+msgstr ""
+
+#: js/index.js:612
+msgid "We will show your secret keys. Please check the following points."
+msgstr ""
+
+#: js/index.js:612
+msgid "No one stands behaind you"
+msgstr ""
+
+#: js/index.js:612
+msgid "No screen capture software is launched"
+msgstr ""
+
+#: js/index.js:614
+msgid "Your secret key information is shown below."
+msgstr ""
+
+#: js/index.js:615
+msgid "Passphrase"
+msgstr ""
+
+#: js/index.js:616 js/index.js:617
+msgid "Secret key"
+msgstr ""
+
+#: js/index.js:618
+msgid "Public key"
+msgstr ""
+
+#: js/index.js:619
+msgid "Wallet address"
+msgstr ""
+
+#: js/index.js:621
+msgid "Secret key information"
+msgstr ""
+
+#: js/index.js:670
+msgid "Received the following deposit transaction."
+msgstr ""
+
+#: js/index.js:672
+msgid "Date and time"
+msgstr ""
+
+#: js/index.js:673
+msgid "Amount to deposit"
+msgstr ""
+
+#: js/index.js:675
+msgid "Deposit notification"
+msgstr ""
+
+#: js/index.js:684
+msgid "Developer donation address"
+msgstr ""
+
+#: js/index.js:686
+msgid "My address"
+msgstr ""
+
+#: js/index.js:690
+msgid "Logged in"
+msgstr ""
+
+#: js/index.js:690
+msgid "Log in successfully!"
+msgstr ""
