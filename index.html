@@ -1,22 +1,474 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 	<head>
 		
-		<meta name="author" content="AUTHOR" />
-		<meta charset="UTF-8" />
-		<link rel="icon" href="FAVICON.ICO" type="image/vnd.microsoft.icon" />
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
-		<!-- Load CSS -->
-		<link rel="stylesheet" type="text/css" href="STYLE.CSS" media="all" />
+		<!-- Load CSS. -->
+		<link href="css/index.css" rel="stylesheet">
 		
-		<!-- Load JavaScript library -->
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<!-- Load JavaScript library. -->
+		<script src="js/jquery-2.1.1.min.js"></script>
+		<script src="js/i18n.js"></script>
+		<script src="js/socket.io-0.9.16.min.js"></script>
+		<script src="js/bitcore-0.1.19.min.js"></script>
+		<script src="js/OfflineWallet.js"></script>
+		<script src="js/Contacts.js"></script>
+		<script src="js/index.js"></script>
 		
-		<title>UNTITLED</title>
+		<!-- Load Bootstrap. -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+		
+		<title>OfflineWallet.info | Bitcoin Core-like brainwallet</title>
 		
 	</head>
-	<body>
+	<body style="background-color:white;">
 		
+		<!--==================================================
+		=== Notification area.
+		====================================================-->
+		<div class="notif-area" id="notif-area-left"></div>
+		<div class="notif-area" id="notif-area-right"></div>
+		
+		<!--==================================================
+		=== Loading Modal.
+		====================================================-->
+		<div class="modal fade" id="loading-modal" data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title text-center locale locale-en" id="loading-modal-label">Processing your request. Please wait...</h4>
+						<h4 class="modal-title text-center locale locale-ja" id="loading-modal-label">処理中です。しばらくお待ちください。。。</h4>
+					</div>
+					<div class="modal-body">
+						<div class="text-center" style="margin-top:80px;margin-bottom:120px;"><img src="img/loading.gif" /></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!--==================================================
+		=== OK Modal.
+		====================================================-->
+		<div class="modal fade" id="ok-modal" tabindex="-1" role="dialog" aria-labelledby="ok-modal-label" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="ok-modal-label">Modal title</h4>
+					</div>
+					<div class="modal-body"></div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>
+							<span class="locale locale-en">Close</span>
+							<span class="locale locale-ja">閉じる</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!--==================================================
+		=== Confirm Modal.
+		====================================================-->
+		<div class="modal fade" id="confirm-modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title"></h4>
+					</div>
+					<div class="modal-body"></div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> キャンセル</button>
+						<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span>
+							<span class="locale locale-en">OK</span>
+							<span class="locale locale-ja">了解</span>
+						</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+		
+		<!--==================================================
+		=== Header.
+		====================================================-->
+		<header class="navbar navbar-default navbar-static-top">
+			<div class="container">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header dropdown">
+					<a class="navbar-brand dropdown-toggle" data-toggle="dropdown" href="#">Offline Wallet | <span class="text-symbol-name">Monacoin</span> <b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="#" onclick="changeCurrency('BTC'); ">Bitcoin (BTC)</a></li>
+						<li><a href="#" onclick="changeCurrency('MONA');">Monacoin (MONA)</a></li>
+					</ul>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse">
+					<ul class="nav navbar-nav navbar-left">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="current-lang">en</span> <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="#" onclick="setLang('en');">English (en)</a></li>
+								<li><a href="#" onclick="setLang('ja');">日本語 (ja)</a></li>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<span class="locale locale-en">Help</span>
+								<span class="locale locale-ja">ヘルプ</span>
+							<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Under construction...</a></li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right only-after-login">
+						<li class="navbar-text"><span id="myaddr">monacoin:???</span></li>
+						<li class="navbar-text"><span id="balance-header">???</span> <span class="symbol text-symbol">MONA</span></li>
+						<li class=""><button type="button" class="btn btn-default navbar-btn" onclick="window.location.reload();"><span class="glyphicon glyphicon-log-out"></span>
+							<span class="locale locale-en">Logout</span>
+							<span class="locale locale-ja">ログアウト</span>
+						</button></li>
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</div><!-- /.container-fluid -->
+		</header>
+		
+		<!--==================================================
+		=== main.
+		====================================================-->
+		<div class="container" style="background-color:white;padding: 20px;border-radius:8px;margin-bottom:50px;">
+			
+			<!-- ウェルカム画面 -->
+			<div class="jumbotron" id="login-tab">
+				<h1>Offiline Wallet | <span class="text-symbol-name">Monacoin</span><div class="text-right">
+					<small class="locale locale-en">― Be Your Own Bank ―</small>
+					<small class="locale locale-ja">― 銀行は、あなた自身 ―</small>
+				</div></h1>
+				<div class="panel panel-default"><div class="panel-body">
+					<h2 class="locale locale-en">Login</h2>
+					<h2 class="locale locale-ja">ログイン</h2>
+					<form id="login-form">
+						<div id="savedPassphraseList" style="margin:30px 0px;" class="btn-toolbar"></div>
+						<div class="input-group locale-tooltip" data-toggle="tooltip" data-placement="left"
+							data-title-en="Passphrase must be longer than 20 letters"
+							data-title-ja="パスフレーズは20文字以上で入力してください"
+						>
+							<input type="password" class="form-control" placeholder="0uen sh1teru tamam! monakoin wo" id="passphrase" autocomplete="off" />
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="submit" id="login-btn" /><span class=" glyphicon glyphicon-log-in"></span>
+									<span class="locale locale-en">Login</span>
+									<span class="locale locale-ja">ログイン</span>
+								</button>
+							</span>
+						</div>
+						<div class="locale-tooltip" data-toggle="tooltip" data-placement="left"
+							data-title-en="do not save your passphrase if some other people can use this PC"
+							data-title-ja="自分以外が使う可能性のあるPCでは絶対に保存させないでください"
+							>
+							<div class="radio">
+								<label><input type="radio" name="savePassphrase" value="none" checked="checked" />
+									<span class="locale locale-en">Do not save passphrase in your browser (strongly suggested)</span>
+									<span class="locale locale-ja">パスフレーズをブラウザ内に保存しない（強く推奨）</span>
+								</label>
+							</div>
+							<div class="radio">
+								<label><input type="radio" name="savePassphrase" value="session" />
+									<span class="locale locale-en">Save until close this tab</span>
+									<span class="locale locale-ja">タブを閉じるまで保存する</span>
+								</label>
+							</div>
+							<div class="radio">
+								<label><input type="radio" name="savePassphrase" value="local" />
+									<span class="locale locale-en">Save forever</span>
+									<span class="locale locale-ja">ずっと保存する</span>
+								</label>
+							</div>
+						</div>
+					</form>
+				</div></div>
+			</div>
+			
+			<!-- 管理画面 -->
+			<div class="" id="control-tab" style="display:none;">
+				
+				<ul class="nav nav-tabs" style="margin-bottom:20px;">
+					<li class="active locale-tooltip" data-toggle="tooltip"
+						data-title-en="Your account summary"
+						data-title-ja="あなたのアカウントの概要です"
+					><a href="#home" data-toggle="tab">
+						<span class="locale locale-en">Summary</span>
+						<span class="locale locale-ja">概要</span>
+					</a></li>
+					<li class="locale-tooltip" data-toggle="tooltip"
+						data-title-en="Send your coins"
+						data-title-ja="送金を行います"
+					><a href="#send" data-toggle="tab">
+						<span class="locale locale-en">Send</span>
+						<span class="locale locale-ja">送金</span>
+					</a></li>
+					<li class="locale-tooltip" data-toggle="tooltip"
+						data-title-en="Show transaction history"
+						data-title-ja="取引履歴を表示します"
+					><a href="#history" data-toggle="tab">
+						<span class="locale locale-en">History</span>
+						<span class="locale locale-ja">取引履歴</span>
+					</a></li>
+					<li class="locale-tooltip" data-toggle="tooltip"
+						data-title-en="View contacts"
+						data-title-ja="アドレス帳を閲覧します"
+					><a href="#contacts" data-toggle="tab">
+						<span class="locale locale-en">Contacts</span>
+						<span class="locale locale-ja">アドレス帳</span>
+					</a></li>
+					<li class="locale-tooltip" data-toggle="tooltip"
+						data-title-en="Miscellaneous settings"
+						data-title-ja="詳細設定を行います"
+					><a href="#settings" data-toggle="tab">
+						<span class="locale locale-en">Config</span>
+						<span class="locale locale-ja">設定</span>
+					</a></li>
+				</ul>
+				
+				<div class="tab-content">
+					<!-- HOME -->
+					<div class="tab-pane fade in active" id="home"><div class="row">
+						<div class="col-md-4">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<span class="locale locale-en">Wallet</span>
+									<span class="locale locale-ja">ウォレット</span>
+								</div>
+								<div class="panel-body">
+									<table>
+										<tr class="locale-tooltip" data-toggle="tooltip" data-placement="left"
+											data-title-en="The sum of the balances whose number of confirmations reached the specified value"
+											data-title-ja="検証数が規定数に達した残高の合計です"
+										>
+											<td>
+												<span class="locale locale-en">Confirmed balance: </span>
+												<span class="locale locale-ja">検証済み残高：</span>
+											</td>
+											<td><span id="balance-confirmed">???</span> <span class="symbol text-symbol">MONA</span></td>
+										</tr>
+										<tr class="locale-tooltip" data-toggle="tooltip" data-placement="left"
+											data-title-en="The sum of the balances whose number of confirmations does not reach the specified value"
+											data-title-ja="検証数が規定値に達していない残高の合計です"
+										>
+											<td>
+												<span class="locale locale-en">Unconfirm balance</span>
+												<span class="locale locale-ja">未検証残高</span>
+											:</td>
+											<td><span id="balance-unconfirm">???</span> <span class="symbol text-symbol">MONA</span></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div> <!-- end of wallet-panel -->
+						<div class="col-md-8"><div class="panel panel-default">
+							<div class="panel-heading">
+								<span class="locale locale-en">Recent transactions (last <span class="N_RECENT_TRANSACTIONS"></span> transactions)</span>
+								<span class="locale locale-ja">最近の取引 (直近<span class="N_RECENT_TRANSACTIONS"></span>件)</span>
+							</div>
+							<div class="panel-body"><table class="table table-striped" id="table-recent-transactions">
+								<tr><th>
+									<span class="locale locale-en">Date and time</span>
+									<span class="locale locale-ja">日時</span>
+								</th><th>
+									<span class="locale locale-en">Type</span>
+									<span class="locale locale-ja">種別</span>
+								</th><th>
+									<span class="locale locale-en">Amount</span>
+									<span class="locale locale-ja">取引量</span>
+								</th></tr>
+								<tbody id="tbody-recent-transactions"></tbody>
+							</table></div>
+						</div></div> <!-- end of recent transactions -->
+					</div></div> <!-- end of #home -->
+					<!-- SEND -->
+					<div class="tab-pane fade" id="send"><form id="send-form">
+						<div class="panel panel-default panel-inactive">
+							<div class="panel-heading">
+								<span class="locale locale-en">Coin control feature</span>
+								<span class="locale locale-ja">コインコントロール機能</span>
+							</div>
+							<div class="panel-body">
+								<table class="table table-striped" id="table-coin-control">
+									<tr><th> </th><th>
+										<span class="locale locale-en">Amount</span>
+										<span class="locale locale-ja">数量</span>
+									</th><th>
+										<span class="locale locale-en">Sender address</span>
+										<span class="locale locale-ja">送金者のアドレス</span>
+									</th><th>
+										<span class="locale locale-en">Date and time</span>
+										<span class="locale locale-ja">日時</span>
+									</th><th>
+										<span class="locale locale-en">#confirmations</span>
+										<span class="locale locale-ja">検証数</span>
+									</th></tr>
+									<tbody id="tbody-coin-control"></tbody>
+								</table>
+							</div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<span class="locale locale-en">Transaction details</span>
+								<span class="locale locale-ja">送金内容</span>
+							</div>
+							<div class="panel-body">
+								<div class="form-group locale-tooltip" data-toggle="tooltip"
+									data-title-en="Set a transaction fee. Please pay a sufficient fee. Otherwise it may take long time before your transaction is included in the blockchain"
+									data-title-ja="取引手数料を設定します。手数料が少なすぎる場合には、トランザクションの検証に時間がかかる可能性があります"
+								><label class="control-label">
+									<span class="locale locale-en">Transaction fee</span>
+									<span class="locale locale-ja">取引手数料</span>
+								</label><div class="input-group"><input type="text" class="form-control" placeholder="0.001" id="transaction-fee" /><span class="input-group-addon text-symbol">MONA</span></div></div>
+								<datalist id="datalist-recipients"></datalist>
+								<table class="table table-striped" id="recipients">
+									<tr><th>#0</th><td><div class="form-group locale-tooltip" data-toggle="tooltip"
+										data-title-en="Please support me by tipping!"
+										data-title-ja="開発者への支援をお願いします！"
+									>
+										<label class="control-label">
+											<span class="locale locale-en">Donation amount to the developer</span>
+											<span class="locale locale-ja">開発者への寄付額</span>
+										</label>
+										<div class="input-group"><input type="text" class="form-control" placeholder="1.234" id="donation-amount" value="0" /><span class="input-group-addon text-symbol">MONA</span></div>
+									</div></td></tr>
+								</table>
+							</div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<button type="button" class="btn btn-danger" onclick="removeRecipient();"><span class="glyphicon glyphicon-minus-sign"></span>
+									<span class="locale locale-en">Remove recipient</span>
+									<span class="locale locale-ja">宛先を削除</span>
+								</button>
+								<button type="button" class="btn btn-success" onclick="addRecipient();"><span class="glyphicon glyphicon-plus-sign"></span>
+									<span class="locale locale-en">Add recipient</span>
+									<span class="locale locale-ja">宛先を追加</span>
+								</button>
+								<button type="submit" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-send"></span>
+									<span class="locale locale-en">Send</span>
+									<span class="locale locale-ja">送金</span>
+								</button>
+							</div>
+						</div>
+					</form></div> <!-- end of #send -->
+					<!-- HISTORY -->
+					<div class="tab-pane fade" id="history"><table class="table table-striped" id="table-history">
+						<tr><th>
+							<span class="locale locale-en">#confirmations</span>
+							<span class="locale locale-ja">検証数</span>
+						</th><th>
+							<span class="locale locale-en">Date</span>
+							<span class="locale locale-ja">日時</span>
+						</th><th>
+							<span class="locale locale-en">Type</span>
+							<span class="locale locale-ja">種別</span>
+						</th><th>
+							<span class="locale locale-en">Address</span>
+							<span class="locale locale-ja">アドレス</span>
+						</th><th>
+							<span class="locale locale-en">Amount</span>
+							<span class="locale locale-ja">取引量</span>
+						</th><th>
+							<span class="locale locale-en">Transaction ID</span>
+							<span class="locale locale-ja">トランザクションID</span>
+						</th></tr>
+						<tbody id="tbody-history"></tbody>
+					</table></div> <!-- end of #history -->
+					<!-- CONTACTS -->
+					<div class="tab-pane fade" id="contacts">
+						<!-- 追加・修正 -->
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<span class="locale locale-en">Register <small>or</small> Modify</span>
+								<span class="locale locale-ja">追加 <small>または</small> 修正</span>
+							</div>
+							<div class="panel-body"><form id="add-contacts-form" onsubmit="addContacts(); return false;"><div class="row">
+								<div class="col-lg-6"><label class="control-label">
+									<span class="locale locale-en">Label</span>
+									<span class="locale locale-ja">ラベル</span>
+								</label><div class="input-group"><span class="input-group-addon">label:</span><input type="text" class="form-control" placeholder="Tamami Wakiyama" id="add-contacts-label" value="" /></div></div>
+								<div class="col-lg-6"><label class="control-label">
+									<span class="locale locale-en">Address</span>
+									<span class="locale locale-ja">アドレス</span>
+								</label><div class="input-group"><span class="input-group-addon">monacoin:</span><input type="text" class="form-control input-address" placeholder="" id="add-contacts-address" value="" /></div></div>
+							</div><div class="" style="margin-top:20px;"><button type="submit" class="btn btn-default">
+								<span class="locale locale-en">Register <small>or</small> Modify</span>
+								<span class="locale locale-ja">追加 <small>または</small> 修正</span>
+							</button></div></form></div>
+						</div>
+						<!-- 登録済み一覧 -->
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								
+								<span class="locale locale-en">Registered contacts</span>
+								<span class="locale locale-ja">登録済みアドレス一覧</span>
+							</div>
+							<div class="panel-body">
+								<p class="locale locale-en">Contacts are saved in your browser. Note that contacts cannot be shared with other computers or other browsers.</p>
+								<p class="locale locale-ja">アドレス帳はお使いのブラウザ内に保管されます。他のブラウザやコンピュータには引き継がれませんのでご注意ください。</p>
+								<table class="table table-striped" id="contacts-table"></table>
+							</div>
+						</div>
+					</div> <!-- end of #contacts -->
+					<!-- SETTINGS -->
+					<div class="tab-pane fade" id="settings">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<span class="locale locale-en">Show secret key</span>
+								<span class="locale locale-ja">秘密鍵表示</span>
+							</div>
+							<div class="panel-body">
+								<p class="locale locale-en">Show your secret keys and related information.<b>Anybody who know your secret key can steal your coins.</b></p>
+								<p class="locale locale-ja">あなたの秘密鍵情報を表示します。<b>秘密鍵を知っていれば、誰でもあなたのコインを盗むことができてしまいます。</b></p>
+								<p class="locale locale-en">DO NOT show your secret keys with shared PCs or where some body can stand your behind.</p>
+								<p class="locale locale-ja">公共のPCや、背後に人がいる可能性のある場所では絶対に表示させないでください。</p>
+								<div style="margin-top:3ex;"><button type="button" class="btn btn-default btn-show-secrets">
+									<span class="locale locale-en">Show your secret key</span>
+									<span class="locale locale-ja">秘密鍵を表示する</span>
+								</button></div>
+							</div>
+						</div>
+					</div> <!-- end of #settings -->
+				</div>
+				
+			</div>
+			
+			<hr />
+			
+			<!-- フッタ― -->
+			<footer>
+				<p class="locale locale-en">Please support me by donations!</p>
+				<p class="locale locale-ja">寄付による支援をお願いします！</p>
+				<ul class="list-unstyled" style="margin-left:1em;">
+					<script type="text/javascript">
+						OfflineWallet.getSupportedSymbols().forEach(function(v){
+							document.write('<li>'+decorateAddress(DONATION_ADDRESSES[v], {appendLabel:false, linkPrefix:OfflineWallet.getSymbolLinkPrefix(v)})+'</li>');
+						});
+					</script>
+					<li></li>
+				</ul>
+				<p>Copyright &copy; <a href="https://offlinewallet.info/">OfflineWallet.info</a> 2014. All rights reserved.<span class="pull-right">[ Hosted by <a href="https://pages.github.com/" class="link-new-window">GitHub Pages</a> | Powered by <a href="http://bitcore.io/" class="link-new-window">bitcore</a> | <a href="https://github.com/monatr/OfflineWallet/" class="link-new-window">GitHub Repository</a> ]</span></p>
+			</footer>
+			
+		</div>
+		<!--==================================================
+		=== End of main.
+		====================================================-->
+		
+		<script src="js/bootstrap.min.js"></script>
 	</body>
 </html>
 
