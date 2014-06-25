@@ -3,7 +3,7 @@
  */
 
 const DONATION_ADDRESSES = {
-	BTC: '1???',
+	BTC:  '1GwRV1BqSc8tBfeFfwGyrRHQXyafujZSfW',
 	MONA: 'MAuFbsULnchrHMqEzwoqvWrXuTxPQMPUrp',
 };
 const N_RECENT_TRANSACTIONS = 10;
@@ -369,15 +369,16 @@ var refreshTransactions = function(){
 }
 
 var refreshCoinControl = function(){
-	log('refreshUnspents(): unspents:', owallet.unspents);
+	log('refreshCoinControl(): unspents:', owallet.unspents);
 	$('#tbody-coin-control').empty();
 	var uns = [].concat(owallet.unspents);
 	uns.sort(function(a, b){
-		// Sort according to coin age.
+		// Sort according to coin age (ca).
 		var a_ca = a.amount * a.confirmations;
 		var b_ca = b.amount * b.confirmations;
-		return a == b ? 0 : (a > b ? -1 : 1);
+		return a_ca == b_ca ? 0 : (a_ca > b_ca ? -1 : 1);
 	});
+	log('refreshCoinControl(): unspents (sorted):', uns);
 	uns.forEach(function(tx){
 		// Find transaction data.
 		var tx2 = null;
@@ -390,11 +391,19 @@ var refreshCoinControl = function(){
 		html += '<td><input type="checkbox" id="check-coin-control-'+tx.txid+'" checked="checked" /></td>';
 		html += '<td>'+tx.amount.toFixed(8)+' <span class="symbol">'+owallet.symbol+'</span></td>';
 		html += '<td>';
+		var tmp = [];
+		tmp['count'] = 0;
 		tx2.vin.forEach(function(tt){
 			if(tt.addr != owallet.getAddress()){
+				if(tmp[tt.addr]) return;
+				tmp[tt.addr] = true;
+				tmp['count']++;
 				html += '<div>'+decorateAddress(tt.addr)+'</div>';
 			}
 		});
+		if(tmp['count'] == 0){
+			html += '<div>('+_('Unknown sender')+')</div>';
+		}
 		html += '</td>';
 		html += '<td>'+dateFormat(1000*tx.ts)+'</td>';
 		html += '<td>'+tx.confirmations+'</td>';
