@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-24 14:49+0900\n"
+"POT-Creation-Date: 2014-06-25 22:13+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -119,120 +119,124 @@ msgstr ""
 msgid "Receive"
 msgstr ""
 
-#: js/index.js:412
+#: js/index.js:405
+msgid "Unknown sender"
+msgstr ""
+
+#: js/index.js:421
 msgid "Registered the following address:"
 msgstr ""
 
-#: js/index.js:412 js/index.js:423
+#: js/index.js:421 js/index.js:432
 msgid "Label"
 msgstr ""
 
-#: js/index.js:412 js/index.js:423
+#: js/index.js:421 js/index.js:432
 msgid "Address"
 msgstr ""
 
-#: js/index.js:413
+#: js/index.js:422
 msgid "Contact successfully registered"
 msgstr ""
 
-#: js/index.js:416
+#: js/index.js:425
 msgid "Failed to register a contact"
 msgstr ""
 
-#: js/index.js:416
+#: js/index.js:425
 msgid ""
 "An error has occured during registering a contact. Please check the address "
 "again."
 msgstr ""
 
-#: js/index.js:423
+#: js/index.js:432
 msgid "Action"
 msgstr ""
 
-#: js/index.js:429
+#: js/index.js:438
 msgid "Edit"
 msgstr ""
 
-#: js/index.js:430
+#: js/index.js:439
 msgid "Delete"
 msgstr ""
 
-#: js/index.js:589
+#: js/index.js:598
 msgid "Passphrase too short"
 msgstr ""
 
-#: js/index.js:589
+#: js/index.js:598
 msgid "Passphrase must be longer than 20 letters."
 msgstr ""
 
-#: js/index.js:611
+#: js/index.js:620
 msgid "Are you sure to display your secret keys?"
 msgstr ""
 
-#: js/index.js:612
+#: js/index.js:621
 msgid "We will show your secret keys. Please check the following points."
 msgstr ""
 
-#: js/index.js:612
+#: js/index.js:621
 msgid "No one stands behaind you"
 msgstr ""
 
-#: js/index.js:612
+#: js/index.js:621
 msgid "No screen capture software is launched"
 msgstr ""
 
-#: js/index.js:614
+#: js/index.js:623
 msgid "Your secret key information is shown below."
 msgstr ""
 
-#: js/index.js:615
+#: js/index.js:624
 msgid "Passphrase"
 msgstr ""
 
-#: js/index.js:616 js/index.js:617
+#: js/index.js:625 js/index.js:626
 msgid "Secret key"
 msgstr ""
 
-#: js/index.js:618
+#: js/index.js:627
 msgid "Public key"
 msgstr ""
 
-#: js/index.js:619
+#: js/index.js:628
 msgid "Wallet address"
 msgstr ""
 
-#: js/index.js:621
+#: js/index.js:630
 msgid "Secret key information"
 msgstr ""
 
-#: js/index.js:670
+#: js/index.js:679
 msgid "Received the following deposit transaction."
 msgstr ""
 
-#: js/index.js:672
+#: js/index.js:681
 msgid "Date and time"
 msgstr ""
 
-#: js/index.js:673
+#: js/index.js:682
 msgid "Amount to deposit"
 msgstr ""
 
-#: js/index.js:675
+#: js/index.js:684
 msgid "Deposit notification"
 msgstr ""
 
-#: js/index.js:684
+#: js/index.js:693
 msgid "Developer donation address"
 msgstr ""
 
-#: js/index.js:686
+#: js/index.js:695
 msgid "My address"
 msgstr ""
 
-#: js/index.js:690
+#: js/index.js:699
 msgid "Logged in"
 msgstr ""
 
-#: js/index.js:690
+#: js/index.js:699
 msgid "Log in successfully!"
 msgstr ""
