@@ -634,9 +634,11 @@ $(function(){
 			var fee = localStorage.getItem(owallet.symbol+'.fee');
 			if(fee !== null){
 				owallet.setFee(fee);
+			}else{
+				fee = owallet.getFee();
 			}
 			log('init: localStorage[fee]:', fee);
-			$('#transaction-fee').val(fee);
+			$('#transaction-fee').val(fee.toFixed(8));
 			// Set color theme.
 			var hue = owallet.getHue();
 			log('init: hue for this user:', hue);
