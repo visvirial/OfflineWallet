@@ -611,7 +611,6 @@ $(function(){
 			}
 			// Create OfflineWallet instance.
 			owallet = new OfflineWallet(passphrase, 'passphrase', symbol);
-			refreshContacts();
 			addRecipient();
 			$('.input-address').attr({placeholder:DONATION_ADDRESSES[owallet.symbol]});
 			// Set show secret button trigger.
@@ -696,6 +695,7 @@ $(function(){
 			if(Contacts.findByAddress(owallet.getAddress()) == null){
 				Contacts.insert(owallet, owallet.getAddress(), _('My address'));
 			}
+			refreshContacts();
 			// Show/hide modals.
 			$('#loading-modal').modal('hide');
 			showOkModal(_('Logged in'), '<div class="text-center">'+_('Log in successfully!')+'</div>');
