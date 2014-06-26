@@ -630,7 +630,7 @@ $(function(){
 					});
 			});
 			// Get fee preference.
-			var fee = localStorage.getItem(owallet.symbol+'.fee');
+			var fee = parseFloat(localStorage.getItem(owallet.symbol+'.fee'));
 			if(fee !== null){
 				owallet.setFee(fee);
 			}else{
