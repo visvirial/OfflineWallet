@@ -452,6 +452,7 @@ var refreshContacts = function(){
 var showConfirmModal = function(title, content, callback){
 	$('#confirm-modal .modal-title').html(title);
 	$('#confirm-modal .modal-body').html(content);
+	$('#confirm-modal .btn-primary').unbind();
 	$('#confirm-modal .btn-primary').click(function(e){
 		$(e.target).parent();
 		if(typeof callback === 'function'){
