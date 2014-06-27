@@ -157,69 +157,72 @@
 		====================================================-->
 		<div class="container" style="background-color:white;padding: 20px;border-radius:8px;margin-bottom:50px;">
 			
-			<!-- ウェルカム画面 -->
-			<div class="jumbotron" id="login-tab">
-				<h1>Offline Wallet | <span class="text-symbol-name">Monacoin</span><div class="text-right">
-					<small class="locale locale-en">― Be Your Own Bank ―</small>
-					<small class="locale locale-ja">― 銀行は、あなた自身 ―</small>
-				</div></h1>
-				<div class="panel panel-default"><div class="panel-body">
-					<h2 class="locale locale-en">Login</h2>
-					<h2 class="locale locale-ja">ログイン</h2>
-					<form id="login-form">
-						<div id="savedPassphraseList" style="margin:30px 0px;" class="btn-toolbar"></div>
-						<div class="input-group locale-tooltip" data-toggle="tooltip" data-placement="left"
-							data-title-en="Passphrase must be longer than 20 letters"
-							data-title-ja="パスフレーズは20文字以上で入力してください"
-						>
-							<input type="password" class="form-control" placeholder="0uen sh1teru tamam! monakoin wo" id="passphrase" autocomplete="off" />
-							<span class="input-group-btn">
-								<button class="btn btn-default" type="submit" id="login-btn" /><span class=" glyphicon glyphicon-log-in"></span>
-									<span class="locale locale-en">Login</span>
-									<span class="locale locale-ja">ログイン</span>
-								</button>
-							</span>
-						</div>
-						<div class="locale-tooltip" data-toggle="tooltip" data-placement="left"
-							data-title-en="do not save your passphrase if some other people can use this PC"
-							data-title-ja="自分以外が使う可能性のあるPCでは絶対に保存させないでください"
+			<div id="login-tab">
+				<!-- ウェルカム画面 -->
+				<div class="jumbotron">
+					<h1>Offline Wallet | <span class="text-symbol-name">Monacoin</span><div class="text-right">
+						<small class="locale locale-en">― Be Your Own Bank ―</small>
+						<small class="locale locale-ja">― 銀行は、あなた自身 ―</small>
+					</div></h1>
+					<div class="panel panel-default"><div class="panel-body">
+						<h2 class="locale locale-en">Login</h2>
+						<h2 class="locale locale-ja">ログイン</h2>
+						<form id="login-form">
+							<div id="savedPassphraseList" style="margin:30px 0px;" class="btn-toolbar"></div>
+							<div class="input-group locale-tooltip" data-toggle="tooltip" data-placement="left"
+								data-title-en="Passphrase must be longer than 20 letters"
+								data-title-ja="パスフレーズは20文字以上で入力してください"
 							>
-							<div class="radio">
-								<label><input type="radio" name="savePassphrase" value="none" checked="checked" />
-									<span class="locale locale-en">Do not save passphrase in your browser (strongly suggested)</span>
-									<span class="locale locale-ja">パスフレーズをブラウザ内に保存しない（強く推奨）</span>
-								</label>
+								<input type="password" class="form-control" placeholder="0uen sh1teru tamam! monakoin wo" id="passphrase" autocomplete="off" />
+								<span class="input-group-btn">
+									<button class="btn btn-default" type="submit" id="login-btn" /><span class=" glyphicon glyphicon-log-in"></span>
+										<span class="locale locale-en">Login</span>
+										<span class="locale locale-ja">ログイン</span>
+									</button>
+								</span>
 							</div>
-							<div class="radio">
-								<label><input type="radio" name="savePassphrase" value="session" />
-									<span class="locale locale-en">Save until close this tab</span>
-									<span class="locale locale-ja">タブを閉じるまで保存する</span>
-								</label>
+							<div class="locale-tooltip" data-toggle="tooltip" data-placement="left"
+								data-title-en="do not save your passphrase if some other people can use this PC"
+								data-title-ja="自分以外が使う可能性のあるPCでは絶対に保存させないでください"
+								>
+								<div class="radio">
+									<label><input type="radio" name="savePassphrase" value="none" checked="checked" />
+										<span class="locale locale-en">Do not save passphrase in your browser (strongly suggested)</span>
+										<span class="locale locale-ja">パスフレーズをブラウザ内に保存しない（強く推奨）</span>
+									</label>
+								</div>
+								<div class="radio">
+									<label><input type="radio" name="savePassphrase" value="session" />
+										<span class="locale locale-en">Save until close this tab</span>
+										<span class="locale locale-ja">タブを閉じるまで保存する</span>
+									</label>
+								</div>
+								<div class="radio">
+									<label><input type="radio" name="savePassphrase" value="local" />
+										<span class="locale locale-en">Save forever</span>
+										<span class="locale locale-ja">ずっと保存する</span>
+									</label>
+								</div>
 							</div>
-							<div class="radio">
-								<label><input type="radio" name="savePassphrase" value="local" />
-									<span class="locale locale-en">Save forever</span>
-									<span class="locale locale-ja">ずっと保存する</span>
-								</label>
-							</div>
+						</form>
+					</div></div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-1"></div>
+					<div class="col-md-5"><div class="panel panel-default">
+						<div class="panel-heading">
+							<span class="locale locale-en">Download</span>
+							<span class="locale locale-ja">ダウンロード</span>
 						</div>
-					</form>
-				</div></div>
-			</div>
+						<div class="panel-body">
+						<p class="locale locale-en"><a class="link-new-window" href="https://github.com/monatr/OfflineWallet/archive/gh-pages.zip">Download OfflineWallet.info</a> to your local PC to prevent from web site manipulation!</p>
+						<p class="locale locale-ja">ウェブサイトの改ざんによる盗難を防ぐため、ローカルPCに <a class="link-new-window" href="https://github.com/monatr/OfflineWallet/archive/gh-pages.zip">OfflineWallet.info をダウンロード</a> しましょう！</p>
+						</div>
+					</div></div>
+					<div class="col-md-1"></div>
+				</div>
 			
-			<div class="row">
-				<div class="col-md-1"></div>
-				<div class="col-md-5"><div class="panel panel-default">
-					<div class="panel-heading">
-						<span class="locale locale-en">Download</span>
-						<span class="locale locale-ja">ダウンロード</span>
-					</div>
-					<div class="panel-body">
-					<p class="locale locale-en"><a class="link-new-window" href="https://github.com/monatr/OfflineWallet/archive/gh-pages.zip">Download OfflineWallet.info</a> to your local PC to prevent from web site manipulation!</p>
-					<p class="locale locale-ja">ウェブサイトの改ざんによる盗難を防ぐため、ローカルPCに <a class="link-new-window" href="https://github.com/monatr/OfflineWallet/archive/gh-pages.zip">OfflineWallet.info をダウンロード</a> しましょう！</p>
-					</div>
-				</div></div>
-				<div class="col-md-1"></div>
 			</div>
 			
 			<!-- 管理画面 -->
