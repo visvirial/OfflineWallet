@@ -632,7 +632,7 @@ $(function(){
 			});
 			// Get fee preference.
 			var fee = parseFloat(localStorage.getItem(owallet.symbol+'.fee'));
-			if(fee !== null){
+			if(!isNaN(fee)){
 				owallet.setFee(fee);
 			}else{
 				fee = owallet.getFee();
