@@ -221,8 +221,10 @@ OfflineWallet.prototype = {
 	 * @return string Monacoin address.
 	 */
 	getAddress: function(){
-		if(!this._address) this.address=this._wk.storeObj().addr;
-		return this.address;
+		if(this._address == undefined){
+			this._address = this._wk.storeObj().addr;
+		}
+		return this._address;
 	},
 	
 	isValidAddress: function(addr){
