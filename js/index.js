@@ -325,6 +325,9 @@ var refreshTransactions = function(){
 			// Address
 			html += '<td><ul class="list">';
 			var createAddressRecord = function(addr, amount){
+				if(typeof amount == 'string'){
+					amount = parseFloat(amount);
+				}
 				return '<li><div>' + decorateAddress(addr) + '</div><div style="margin-left:10px;">' + numberFormat(amount.toFixed(8)) + ' <span class="symbol">'+owallet.symbol+'</span></div></li>';
 			};
 			if(issend){

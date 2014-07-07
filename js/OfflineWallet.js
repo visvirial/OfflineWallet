@@ -74,7 +74,7 @@ const OFFLINE_WALLET_NETWORKS = {
 
 const OFFLINE_WALLET_INSIGHT_ENDPOINTS = {
 	//BTC:  ['http://chain.localbitcoins.com', 'https://search.bitaccess.ca'],
-	BTC:  ['http://chain.localbitcoins.com'],
+	BTC:  ['https://search.bitaccess.ca'],
 	MONA: ['http://abe.monash.pw:3000'],
 };
 
