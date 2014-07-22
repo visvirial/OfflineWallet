@@ -512,26 +512,52 @@ var showNetworkNotification = function(title, content){
 	$('#notif-area-right').append(elem);
 }
 
-var getSavedPassphrase = function(symbol, storage){
-	var str = storage.getItem(symbol+'.passphrase');
+var getSavedSecret = function(type, symbol, storage){
+	var str = storage.getItem(symbol+'.'+type);
 	if(str == null) return [];
 	return JSON.parse(str);
 }
 
-var addSavedPassphrase = function(symbol, storage, p){
-	var saved = getSavedPassphrase(symbol, storage);
+var addSavedSecret = function(type, symbol, storage, p){
+	var saved = getSavedSecret(type, symbol, storage);
 	// Checks if already registered.
 	if($.inArray(p, saved) >= 0) return;
 	saved[saved.length] = p;
-	storage.setItem(symbol+'.passphrase', JSON.stringify(saved));
+	storage.setItem(symbol+'.'+type, JSON.stringify(saved));
 }
 
-var removeSavedPassphrase = function(symbol, storage, p){
-	var saved = getSavedPassphrase(symbol, storage);
+var removeSavedSecret = function(type, symbol, storage, p){
+	var saved = getSavedSecret(type, symbol, storage);
 	var index = $.inArray(p, saved);
 	if(index < 0) return;
 	saved.splice(index, 1);
-	storage.setItem(symbol+'.passphrase', JSON.stringify(saved));
+	storage.setItem(symbol+'.'+type, JSON.stringify(saved));
+}
+
+var loginType = 'passphrase';
+var setLoginType = function(type){
+	switch(type){
+		case 'passphrase':
+			$('#login-form-type-text').html(_('Passphrase'));
+			$('#secret').attr('type', 'password');
+			$('#secret').attr('placeholder', '0uen sh1teru tamam! monakoin wo');
+			loginType = 'passphrase';
+			break;
+		case 'WIF':
+			$('#login-form-type-text').html(_('WIF'));
+			$('#secret').attr('type', 'text');
+			$('#secret').attr('placeholder', 'TSvuyrddrAsc1ivbpK2msBJJgUPtcv1Hj177jRPin8WEhUjCru8i');
+			loginType = 'WIF';
+			break;
+		case 'miniPrivKey':
+			$('#login-form-type-text').html(_('Mini Priv Key'));
+			$('#secret').attr('type', 'text');
+			$('#secret').attr('placeholder', '');  // :TODO
+			loginType = 'miniPrivKey';
+			break;
+		default:
+			return;
+	}
 }
 
 /****************************************************************************************************
@@ -554,6 +580,7 @@ $(function(){
 	$('a[class=link-new-window]').prepend('<span class="glyphicon glyphicon-new-window"></span> ');
 	$('.panel .panel-heading').prepend('<span class="glyphicon glyphicon-collapse-down"></span> ').wrapInner('<a href="#" onclick="togglePanel(this);"></a>');
 	$('.panel-inactive .panel-heading a').click();
+	setLoginType('passphrase');
 	// Get symbol.
 	var symbol = getCurrency();
 	var symbolName = OfflineWallet.getSymbolName(symbol);
@@ -565,10 +592,11 @@ $(function(){
 	Contacts.prefix = symbol + '.Contacts.';
 	$('.text-symbol').html(symbol);
 	$('.text-symbol-name').html(symbolName);
+	
 	//
-	// Show saved passphrase list.
-	var insertPassphraseCandidate = function(p, type){
-		var ow = new OfflineWallet(p, 'passphrase', symbol);
+	// Show saved secret list.
+	var insertSecretCandidate = function(type, secret, storageType){
+		var ow = new OfflineWallet(secret, type, symbol);
 		var addr = ow.getAddress();
 		var hue = ow.getHue();
 		var rgb = hsv2rgb({
@@ -577,13 +605,15 @@ $(function(){
 			v: 1.0,
 		});
 		var html = '<div class="btn-group">';
-		html += '<button type="button" class="btn btn-default" style="cursor:pointer;" onclick="removeSavedPassphrase(\''+symbol+'\','+type+'Storage,\''+p+'\');window.location.reload();"><span class="glyphicon glyphicon-remove"></span></button>';
-		html += '<button type="button" class="btn btn-default" style="color:white;background-color:'+rgb2css(rgb)+';" onclick="$(\'#passphrase\').val(\''+p+'\');$(\'#login-form\').submit();">' + addr + '</button>';
+		html += '<button type="button" class="btn btn-default" style="cursor:pointer;" onclick="removeSavedSecret(\''+type+'\',\''+symbol+'\','+storageType+'Storage,\''+secret+'\');window.location.reload();"><span class="glyphicon glyphicon-remove"></span></button>';
+		html += '<button type="button" class="btn btn-default" style="color:white;background-color:'+rgb2css(rgb)+';" onclick="setLoginType(\''+type+'\');$(\'#secret\').val(\''+secret+'\');$(\'#login-form\').submit();">'+type+':'+addr+'</button>';
 		html += '</div>';
-		$('#savedPassphraseList').append(html);
-	}
-	getSavedPassphrase(symbol, sessionStorage).forEach(function(p){insertPassphraseCandidate(p,'session')});
-	getSavedPassphrase(symbol, localStorage  ).forEach(function(p){insertPassphraseCandidate(p,'local')});
+		$('#savedSecretList').append(html);
+	};
+	['passphrase', 'WIF', 'miniPrivKey'].forEach(function(type){
+		getSavedSecret(type, symbol, sessionStorage).forEach(function(secret){insertSecretCandidate(type, secret, 'session')});
+		getSavedSecret(type, symbol, localStorage  ).forEach(function(secret){insertSecretCandidate(type, secret, 'local')});
+	});
 	
 	//
 	// Set forcus to the passphrase input area.
@@ -594,27 +624,52 @@ $(function(){
 	$('#login-form').submit(function(e){
 		$('#loading-modal').modal('show');
 		setTimeout(function(){
-			// Fetch passphrase.
-			var passphrase = $('#passphrase').val();
-			// Check if passphrase has sufficient length.
-			if(passphrase.length < 20){
-				$('#loading-modal').modal('hide');
-				showOkModal(_('Passphrase too short'), '<p>'+_('Passphrase must be longer than 20 letters.')+'</p>');
-				return;
+			// Fetch secret.
+			var secret = $('#secret').val();
+			// Check validity.
+			switch(loginType){
+				case 'passphrase':
+					if(secret.length < 20){
+						$('#loading-modal').modal('hide');
+						showOkModal(_('Passphrase too short'), '<p>'+_('Passphrase must be longer than 20 letters.')+'</p>');
+						return;
+					}
+				case 'WIF':
+					break;
+				case 'miniPrivKey':
+					break;
+				default:
+					throw new Error('E: invalid loginType.');
 			}
-			// Fetch passphrase save preference.
-			var save = $('input[name="savePassphrase"]:checked').val();
+			// Fetch secret save preference.
+			var save = $('input[name="saveSecret"]:checked').val();
 			switch(save){
 				case 'local':
-					addSavedPassphrase(symbol, localStorage, passphrase);
+					addSavedSecret(loginType, symbol, localStorage, secret);
 					break;
 				case 'session':
-					addSavedPassphrase(symbol, sessionStorage, passphrase);
+					addSavedSecret(loginType, symbol, sessionStorage, secret);
 					break;
 				default:
 			}
 			// Create OfflineWallet instance.
-			owallet = new OfflineWallet(passphrase, 'passphrase', symbol);
+			try{
+				owallet = new OfflineWallet(secret, loginType, symbol);
+			}catch(e){
+				$('#loading-modal').modal('hide');
+				switch(loginType){
+					case 'WIF':
+						showOkModal(_('Failed to generate key pair'), '<p>'+_('The WIF you entered seems to be invalid!')+'</p>');
+						break;
+					case 'miniPrivKey':
+						showOkModal(_('Failed to generate key pair'), '<p>'+_('The mini private key you entered seems to be invalid!')+'</p>');
+						break;
+					case 'passphrase':
+					default:
+						showOkModal(_('Failed to generate key pair'), '<p>'+_('There is a thechnical issue. Please contact developer!')+'</p>');
+				}
+				return;
+			}
 			addRecipient();
 			$('.input-address').attr({placeholder:DONATION_ADDRESSES[owallet.symbol]});
 			// Set show secret button trigger.
@@ -624,7 +679,7 @@ $(function(){
 					'<p>'+_('We will show your secret keys. Please check the following points.')+'</p><ul class="list"><li>'+_('No one stands behaind you')+'</li><li>'+_('No screen capture software is launched')+'</li></ul>',
 					function(){
 						var html = '<p>'+_('Your secret key information is shown below.')+'</p><table class="table table-striped">';
-						html += '<tr><td style="min-width:100px;">'+_('Passphrase')+'</td><td>'+escapeHTML(owallet.passphrase)+'</td></tr>';
+						html += '<tr><td style="min-width:100px;">'+_('Passphrase')+'</td><td>'+(loginType=='passphrase'?escapeHTML(owallet.passphrase):'-')+'</td></tr>';
 						html += '<tr><td>'+_('Secret key')+'</td><td style="word-break:break-all;">'+owallet.getPrivKey()+'</td></tr>';
 						html += '<tr><td>'+_('Secret key')+'<br />(<a href="https://en.bitcoin.it/wiki/Wallet_import_format" target="_blank"><span class="glyphicon glyphicon-new-window"></span> WIF</a>)</td><td style="word-break:break-all;">'+owallet.getPrivKeyWIF()+'</td></tr>';
 						html += '<tr><td>'+_('Public key')+'</td><td style="word-break:break-all;">'+owallet.getPubKey()+'</td></tr>';

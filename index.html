@@ -168,12 +168,28 @@
 						<h2 class="locale locale-en">Login</h2>
 						<h2 class="locale locale-ja">ログイン</h2>
 						<form id="login-form">
-							<div id="savedPassphraseList" style="margin:30px 0px;" class="btn-toolbar"></div>
+							<div id="savedSecretList" style="margin:30px 0px;" class="btn-toolbar"></div>
 							<div class="input-group locale-tooltip" data-toggle="tooltip" data-placement="left"
 								data-title-en="Passphrase must be longer than 20 letters"
 								data-title-ja="パスフレーズは20文字以上で入力してください"
 							>
-								<input type="password" class="form-control" placeholder="0uen sh1teru tamam! monakoin wo" id="passphrase" autocomplete="off" />
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+										<span id="login-form-type-text">Passphrase</span> <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="#" onclick="setLoginType('passphrase')">
+											<span class="locale locale-en">Passphrase</span>
+											<span class="locale locale-ja">パスフレーズ</span>
+										</a></li>
+										<li><a href="#" onclick="setLoginType('WIF')">WIF</a></li>
+										<li><a href="#" onclick="setLoginType('miniPrivKey')">
+											<span class="locale locale-en">Mini Priv Key</span>
+											<span class="locale locale-ja">ミニ秘密鍵</span>
+										</a></li>
+									</ul>
+								</div>
+								<input type="password" class="form-control" placeholder="0uen sh1teru tamam! monakoin wo" id="secret" autocomplete="off" />
 								<span class="input-group-btn">
 									<button class="btn btn-default" type="submit" id="login-btn" /><span class=" glyphicon glyphicon-log-in"></span>
 										<span class="locale locale-en">Login</span>
@@ -182,23 +198,23 @@
 								</span>
 							</div>
 							<div class="locale-tooltip" data-toggle="tooltip" data-placement="left"
-								data-title-en="do not save your passphrase if some other people can use this PC"
+								data-title-en="do not save your secrets if some other people can use this PC"
 								data-title-ja="自分以外が使う可能性のあるPCでは絶対に保存させないでください"
 								>
 								<div class="radio">
-									<label><input type="radio" name="savePassphrase" value="none" checked="checked" />
-										<span class="locale locale-en">Do not save passphrase in your browser (strongly suggested)</span>
-										<span class="locale locale-ja">パスフレーズをブラウザ内に保存しない（強く推奨）</span>
+									<label><input type="radio" name="saveSecret" value="none" checked="checked" />
+										<span class="locale locale-en">Do not save login information in your browser (strongly suggested)</span>
+										<span class="locale locale-ja">ログイン情報をブラウザ内に保存しない（強く推奨）</span>
 									</label>
 								</div>
 								<div class="radio">
-									<label><input type="radio" name="savePassphrase" value="session" />
+									<label><input type="radio" name="saveSecret" value="session" />
 										<span class="locale locale-en">Save until close this tab</span>
 										<span class="locale locale-ja">タブを閉じるまで保存する</span>
 									</label>
 								</div>
 								<div class="radio">
-									<label><input type="radio" name="savePassphrase" value="local" />
+									<label><input type="radio" name="saveSecret" value="local" />
 										<span class="locale locale-en">Save forever</span>
 										<span class="locale locale-ja">ずっと保存する</span>
 									</label>
