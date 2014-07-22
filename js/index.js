@@ -21,14 +21,18 @@ var escapeHTML = function(html){
 	return jQuery('<div>').text(html).html();
 }
 
+var zeroPad_2 = function(num){
+	return String('00'+num).slice(-2);
+}
+
 var numberFormat = function(num){
 	return num.toString().replace(/^\d+[^\.]/, function(t){return t.replace(/([\d]+?)(?=(?:\d{3})+$)/g, function(t){ return t + ','; });});
 }
 
 var dateFormat = function(t){
 	var date = new Date(t);
-	var html = date.getFullYear()+'/'+('00'+date.getMonth()).substr(-2)+'/'+('00'+date.getDate()).substr(-2)+' '+
-		('00'+date.getHours()).substr(-2)+':'+('00'+date.getMinutes()).substr(-2)+':'+('00'+date.getSeconds()).substr(-2);
+	var html = date.getFullYear()+'/'+zeroPad_2(date.getMonth()+1)+'/'+zeroPad_2(date.getDate())+' '+
+		zeroPad_2(date.getHours())+':'+zeroPad_2(date.getMinutes())+':'+zeroPad_2(date.getSeconds());
 	return html;
 }
 
