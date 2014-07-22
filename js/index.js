@@ -21,14 +21,18 @@ var escapeHTML = function(html){
 	return jQuery('<div>').text(html).html();
 }
 
+var zeroPad = function(num, length){
+	return (Array(length).join('0')+(num)).slice(-length);
+}
+
 var numberFormat = function(num){
 	return num.toString().replace(/^\d+[^\.]/, function(t){return t.replace(/([\d]+?)(?=(?:\d{3})+$)/g, function(t){ return t + ','; });});
 }
 
 var dateFormat = function(t){
 	var date = new Date(t);
-	var html = date.getFullYear()+'/'+('00'+date.getMonth()).substr(-2)+'/'+('00'+date.getDate()).substr(-2)+' '+
-		('00'+date.getHours()).substr(-2)+':'+('00'+date.getMinutes()).substr(-2)+':'+('00'+date.getSeconds()).substr(-2);
+	var html = date.getFullYear()+'/'+zeroPad(date.getMonth()+1, 2)+'/'+zeroPad(date.getDate(), 2)+' '+
+		zeroPad(date.getHours(), 2)+':'+zeroPad(date.getMinutes(), 2)+':'+zeroPad(date.getSeconds(), 2);
 	return html;
 }
 
@@ -552,7 +556,7 @@ $(function(){
 	$("[data-toggle='tooltip']").tooltip({delay:{show:100,hide:300}});
 	$('a[class=link-new-window]').attr('target', '_blank');
 	$('a[class=link-new-window]').prepend('<span class="glyphicon glyphicon-new-window"></span> ');
-	$('.panel .panel-heading').prepend('<span class="glyphicon glyphicon-collapse-down"></span> ').wrapInner('<a href="#" onclick="togglePanel(this);"></a>');
+	$('.panel .panel-heading').prepend('<span class="glyphicon glyphicon-collapse-down"></span> ').wrapInner('<a href="javascript:;" onclick="togglePanel(this);"></a>');
 	$('.panel-inactive .panel-heading a').click();
 	// Get symbol.
 	var symbol = getCurrency();
