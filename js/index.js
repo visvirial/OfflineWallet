@@ -552,7 +552,7 @@ $(function(){
 	$("[data-toggle='tooltip']").tooltip({delay:{show:100,hide:300}});
 	$('a[class=link-new-window]').attr('target', '_blank');
 	$('a[class=link-new-window]').prepend('<span class="glyphicon glyphicon-new-window"></span> ');
-	$('.panel .panel-heading').prepend('<span class="glyphicon glyphicon-collapse-down"></span> ').wrapInner('<a href="#" onclick="togglePanel(this);"></a>');
+	$('.panel .panel-heading').prepend('<span class="glyphicon glyphicon-collapse-down"></span> ').wrapInner('<a href="javascript:;" onclick="togglePanel(this);"></a>');
 	$('.panel-inactive .panel-heading a').click();
 	// Get symbol.
 	var symbol = getCurrency();
