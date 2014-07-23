@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OfflineWallet.info\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-25 22:13+0900\n"
-"PO-Revision-Date: 2014-06-25 22:13+0900\n"
+"POT-Creation-Date: 2014-07-23 20:41+0900\n"
+"PO-Revision-Date: 2014-07-23 20:41+0900\n"
 "Last-Translator: Mona Tore <monatr.jp@gmail.com>\n"
 "Language-Team: ja <monatr.jp@gmail.com>\n"
 "Language: ja\n"
@@ -112,39 +112,39 @@ msgstr "トランザクションを送信中にエラーが発生しました:"
 msgid "unconfirmed"
 msgstr "未検証"
 
-#: js/index.js:324 js/index.js:361
+#: js/index.js:324 js/index.js:364
 msgid "Send"
 msgstr "送金"
 
-#: js/index.js:324 js/index.js:361
+#: js/index.js:324 js/index.js:364
 msgid "Receive"
 msgstr "入金"
 
-#: js/index.js:405
+#: js/index.js:408
 msgid "Unknown sender"
 msgstr "不明な送金者"
 
-#: js/index.js:421
+#: js/index.js:424
 msgid "Registered the following address:"
 msgstr "以下のアドレスを登録しました:"
 
-#: js/index.js:421 js/index.js:432
+#: js/index.js:424 js/index.js:435
 msgid "Label"
 msgstr "ラベル"
 
-#: js/index.js:421 js/index.js:432
+#: js/index.js:424 js/index.js:435
 msgid "Address"
 msgstr "アドレス"
 
-#: js/index.js:422
+#: js/index.js:425
 msgid "Contact successfully registered"
 msgstr "アドレス帳への登録に成功しました"
 
-#: js/index.js:425
+#: js/index.js:428
 msgid "Failed to register a contact"
 msgstr "アドレス帳へ登録失敗"
 
-#: js/index.js:425
+#: js/index.js:428
 msgid ""
 "An error has occured during registering a contact. Please check the address "
 "again."
@@ -152,94 +152,118 @@ msgstr ""
 "アドレス帳への登録時にエラーが発生しました。アドレスが間違っていないか再度ご"
 "確認ください。"
 
-#: js/index.js:432
+#: js/index.js:435
 msgid "Action"
 msgstr "操作"
 
-#: js/index.js:438
+#: js/index.js:441
 msgid "Edit"
 msgstr "編集"
 
-#: js/index.js:439
+#: js/index.js:442
 msgid "Delete"
 msgstr "削除"
 
-#: js/index.js:598
-msgid "Passphrase too short"
-msgstr "パスフレーズが短すぎます"
-
-#: js/index.js:598
-msgid "Passphrase must be longer than 20 letters."
-msgstr "パスフレーズは20文字以上で入力してください。"
-
-#: js/index.js:620
-msgid "Are you sure to display your secret keys?"
-msgstr "本当に秘密鍵を表示してもよろしいですか？"
-
-#: js/index.js:621
-msgid "We will show your secret keys. Please check the following points."
-msgstr "あなたの秘密鍵を表示します。以下の点をご確認ください。"
-
-#: js/index.js:621
-msgid "No one stands behaind you"
-msgstr "背後に誰もいないこと"
-
-#: js/index.js:621
-msgid "No screen capture software is launched"
-msgstr "スクリーンキャプチャソフトが動作していないこと"
-
-#: js/index.js:623
-msgid "Your secret key information is shown below."
-msgstr "あなたの秘密鍵情報です。"
-
-#: js/index.js:624
+#: js/index.js:541 js/index.js:682
 msgid "Passphrase"
 msgstr "パスフレーズ"
 
-#: js/index.js:625 js/index.js:626
+#: js/index.js:547
+msgid "WIF"
+msgstr "WIF"
+
+#: js/index.js:553
+msgid "Mini Priv Key"
+msgstr "ミニ秘密鍵"
+
+#: js/index.js:634
+msgid "Passphrase too short"
+msgstr "パスフレーズが短すぎます"
+
+#: js/index.js:634
+msgid "Passphrase must be longer than 20 letters."
+msgstr "パスフレーズは20文字以上で入力してください。"
+
+#: js/index.js:662 js/index.js:665 js/index.js:669
+msgid "Failed to generate key pair"
+msgstr "鍵ペアの生成に失敗しました"
+
+#: js/index.js:662
+msgid "The WIF you entered seems to be invalid!"
+msgstr "入力されたWIFは不正です！"
+
+#: js/index.js:665
+msgid "The mini private key you entered seems to be invalid!"
+msgstr "入力されたミニ秘密鍵は不正です！"
+
+#: js/index.js:669
+msgid "There is a thechnical issue. Please contact developer!"
+msgstr "技術的問題が発生しました。開発者へご連絡をお願いします！"
+
+#: js/index.js:678
+msgid "Are you sure to display your secret keys?"
+msgstr "本当に秘密鍵を表示してもよろしいですか？"
+
+#: js/index.js:679
+msgid "We will show your secret keys. Please check the following points."
+msgstr "あなたの秘密鍵を表示します。以下の点をご確認ください。"
+
+#: js/index.js:679
+msgid "No one stands behaind you"
+msgstr "背後に誰もいないこと"
+
+#: js/index.js:679
+msgid "No screen capture software is launched"
+msgstr "スクリーンキャプチャソフトが動作していないこと"
+
+#: js/index.js:681
+msgid "Your secret key information is shown below."
+msgstr "あなたの秘密鍵情報です。"
+
+#: js/index.js:683 js/index.js:684
 msgid "Secret key"
 msgstr "秘密鍵"
 
-#: js/index.js:627
+#: js/index.js:685
 msgid "Public key"
 msgstr "公開鍵"
 
-#: js/index.js:628
+#: js/index.js:686
 msgid "Wallet address"
 msgstr "ウォレットアドレス"
 
-#: js/index.js:630
+#: js/index.js:688
 msgid "Secret key information"
 msgstr "秘密鍵情報"
 
-#: js/index.js:679
+#: js/index.js:739
 msgid "Received the following deposit transaction."
 msgstr "以下の入金トランザクションを受信しました。"
 
-#: js/index.js:681
+#: js/index.js:741
 msgid "Date and time"
 msgstr "日時"
 
-#: js/index.js:682
+#: js/index.js:742
 msgid "Amount to deposit"
 msgstr "入金額"
 
-#: js/index.js:684
+#: js/index.js:744
 msgid "Deposit notification"
 msgstr "入金お知らせ"
 
-#: js/index.js:693
+#: js/index.js:753
 msgid "Developer donation address"
 msgstr "開発者寄付アドレス"
 
-#: js/index.js:695
+#: js/index.js:755
 msgid "My address"
 msgstr "マイアドレス"
 
-#: js/index.js:699
+#: js/index.js:760
 msgid "Logged in"
 msgstr "ログインしました"
 
-#: js/index.js:699
+#: js/index.js:760
 msgid "Log in successfully!"
 msgstr "ログインに成功しました！"
