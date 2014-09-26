@@ -727,14 +727,14 @@ $(function(){
 							if(vin.addr == owallet.getAddress()){
 								shouldRefresh = true;
 								issend = true;
-								amount -= vin.value;
+								amount -= parseFloat(vin.value);
 							}
 						});
 						data.vout.forEach(function(vout){
 							vout.scriptPubKey.addresses.forEach(function(addr){
 								if(addr == owallet.getAddress()){
 									shouldRefresh = true;
-									amount += vout.value;
+									amount += parseFloat(vout.value);
 								}
 							});
 						});

@@ -73,9 +73,8 @@ const OFFLINE_WALLET_NETWORKS = {
 };
 
 const OFFLINE_WALLET_INSIGHT_ENDPOINTS = {
-	//BTC:  ['http://chain.localbitcoins.com', 'https://search.bitaccess.ca'],
 	BTC:  ['https://search.bitaccess.ca', 'http://insight.bitpay.com'],
-	MONA: ['http://abe.monash.pw:3000'],
+	MONA: ['http://mona.chainsight.info'],
 };
 
 const OFFLINE_WALLET_MAGIC = 'offlinewallet.info';
