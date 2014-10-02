@@ -73,7 +73,7 @@ const OFFLINE_WALLET_NETWORKS = {
 };
 
 const OFFLINE_WALLET_INSIGHT_ENDPOINTS = {
-	BTC:  ['https://search.bitaccess.ca', 'http://insight.bitpay.com'],
+	BTC:  ['http://btc.chainsight.info'],
 	MONA: ['http://mona.chainsight.info'],
 };
 
