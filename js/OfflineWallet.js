@@ -73,8 +73,8 @@ const OFFLINE_WALLET_NETWORKS = {
 };
 
 const OFFLINE_WALLET_INSIGHT_ENDPOINTS = {
-	BTC:  ['http://btc.chainsight.info'],
-	MONA: ['http://mona.chainsight.info'],
+	BTC:  ['https://btc.chainsight.info'],
+	MONA: ['https://mona.chainsight.info'],
 };
 
 const OFFLINE_WALLET_MAGIC = 'offlinewallet.info';
