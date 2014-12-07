@@ -47,6 +47,11 @@ var decorateAddress = function(addr, opts){
 	return html;
 }
 
+var simpleAddress = function(addr){
+	var prefix = (owallet ? OfflineWallet.getSymbolLinkPrefix(owallet.symbol) : 'monacoin');
+	return prefix + ":" + addr;
+}
+
 var hsv2rgb = function(hsv){
 	var h = hsv.h;
 	var s = hsv.s;
@@ -771,6 +776,8 @@ $(function(){
 			//
 			//Refresh data.
 			$('#myaddr').html(decorateAddress(owallet.getAddress(), {appendLabel:false}));
+			// QRCode Generate
+			$('#qrcode').qrcode({width: 200,height: 200,text: simpleAddress(owallet.getAddress())});
 			// Refetch user data.
 			refetch();
 		}, 500);
