@@ -794,7 +794,7 @@ $(function(){
 			$('#control-tab').fadeIn();
 			//
 			//Refresh data.
-			$('#myaddr').html(decorateAddress(owallet.getAddress(), {appendLabel:false}));
+			$('.myaddr').html(decorateAddress(owallet.getAddress(), {appendLabel:false}));
 			// QRCode Generate
 			$('#qrcode').qrcode({width: 200,height: 200,text: simpleAddress(owallet.getAddress())});
 			// Refetch user data.
