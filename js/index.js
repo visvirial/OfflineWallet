@@ -36,9 +36,30 @@ var dateFormat = function(t){
 	return html;
 }
 
+/**
+ * Register Bootstrap's popover.
+ */
+var registerPopover = function(elem){
+	// Set QR code popover.
+	$(elem).each(function(index){
+		var elem = document.createElement('div');
+		$(elem).qrcode({width: 200, height: 200, text: this.href});
+		var title = this.href.substr(0, 20) + '...';
+		$(this).popover({
+			trigger: 'hover',
+			placement: 'bottom',
+			html: true,
+			title: title,
+			content: elem,
+		});
+		$(this).popover('show');
+	});
+}
+
 var decorateAddress = function(addr, opts){
 	var linkPrefix = (opts && opts.linkPrefix) ? opts.linkPrefix : (owallet ? OfflineWallet.getSymbolLinkPrefix(owallet.symbol) : 'monacoin');
-	var html = '<a href="'+linkPrefix+':' + addr + '">'+linkPrefix+'</a>:' + addr;
+	var html = '<a href="' + linkPrefix + ':' + addr + '" class="address-link" onmouseover="registerPopover(this);">'+linkPrefix+'</a>:<span>' + addr + '</span>';
+	// Append label if necessary.
 	var appendLabel = opts && opts.appendLabel;
 	if(appendLabel){
 		var label = Contacts.findByAddress(addr);
@@ -422,8 +443,6 @@ var refreshCoinControl = function(){
 		html += '</tr>';
 		$('#tbody-coin-control').append(html);
 	});
-	
-	
 }
 
 var addContacts = function(){
