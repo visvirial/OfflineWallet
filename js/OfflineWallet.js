@@ -319,10 +319,11 @@ OfflineWallet.prototype = {
 	 * @return Transaction created transaction.
 	 */
 	createTransaction: function(outs, extra){
-		var opts = {network: OFFLINE_WALLET_NETWORKS[this.symbol], feeSat: this._feeSat};
 		var unspents = this.unspents;
 		var keys = [this.getPrivKeyWIF()];
-		if(extra && extra.opts) opts=extra.opts;
+		var opts = (extra && extra.opts) ? extra.opts : {};
+		opts.network = OFFLINE_WALLET_NETWORKS[this.symbol];
+		opts.feeSat = this._feeSat;
 		if(extra && extra.unspents) unspents=extra.unspents;
 		if(extra && extra.keys) keys=extra.keys;
 		var tx = new bitcore.TransactionBuilder(opts)
