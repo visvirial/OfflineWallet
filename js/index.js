@@ -240,7 +240,7 @@ var send = function(){
 			if(totalAmountSend + owallet.getFee() > totalAmountUnspent){
 				throw new Error(_('Insufficient funds'));
 			}
-			var tx = owallet.createTransaction(outs, {unspents:unspents});
+			var tx = owallet.createTransaction(outs, {unspents:unspents, opts:{spendUnconfirmed:true}});
 			// Show confirmation dialog.
 			var stdtx = tx.getStandardizedObject();
 			log('send(): std tx:', stdtx);
@@ -421,7 +421,7 @@ var refreshCoinControl = function(){
 			}
 		});
 		var html = '<tr>';
-		html += '<td><input type="checkbox" id="check-coin-control-'+tx.txid+'" checked="checked" /></td>';
+		html += '<td><input type="checkbox" id="check-coin-control-'+tx.txid+'"'+(tx.confirmations>0?'checked="checked"':'')+' /></td>';
 		html += '<td>'+tx.amount.toFixed(8)+' <span class="symbol">'+owallet.symbol+'</span></td>';
 		html += '<td>';
 		var tmp = [];
